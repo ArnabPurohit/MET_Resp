@@ -40,13 +40,15 @@ G_Jet::G_Jet(const edm::ParameterSet& iConfig):
   photonSrcToken_(consumes<edm::View<pat::Photon> >(iConfig.getUntrackedParameter<edm::InputTag>("photonSrc"))),
   jetSrcToken_(consumes<edm::View<pat::Jet> >(iConfig.getUntrackedParameter<edm::InputTag>("jetSrc"))),
   metSrcToken_(consumes<edm::View<pat::MET> >(iConfig.getUntrackedParameter<edm::InputTag>("metSrc")))
-
 {
   //now do what ever initialization is needed
   vtxLabel_ = consumes<reco::VertexCollection> (iConfig.getParameter<InputTag>("VtxLabel"));
   rhoLabel_                  = consumes<double>(iConfig.getParameter<InputTag>("rhoLabel"));
   rhoCentralLabel_ = consumes<double> (iConfig.getParameter<InputTag>("rhoCentralLabel"));
-  trgResultsLabel_           = consumes<edm::TriggerResults>           (iConfig.getParameter<InputTag>("triggerResults"));
+  //  trgResultsLabel_           = consumes<edm::TriggerResults>           (iConfig.getParameter<InputTag>("triggerResults"));
+  triggerBits_= consumes<edm::TriggerResults>(iConfig.getParameter<InputTag>("triggerResults"));
+  triggerObjects_ = consumes<edm::View<pat::TriggerObjectStandAlone>>(iConfig.getParameter<InputTag>("objects"));
+  triggerPrescales_ = consumes<pat::PackedTriggerPrescales>(iConfig.getParameter<InputTag>("prescales"));
 
 
   usesResource("TFileService");

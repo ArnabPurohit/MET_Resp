@@ -25,7 +25,10 @@
 #include "DataFormats/PatCandidates/interface/Jet.h"
 #include "DataFormats/PatCandidates/interface/MET.h"
 #include "DataFormats/PatCandidates/interface/PackedCandidate.h"
-
+#include "FWCore/Common/interface/TriggerNames.h"
+#include "DataFormats/Common/interface/TriggerResults.h"
+#include "DataFormats/PatCandidates/interface/TriggerObjectStandAlone.h"
+#include "DataFormats/PatCandidates/interface/PackedTriggerPrescales.h"
 #include "HLTrigger/HLTcore/interface/HLTPrescaleProvider.h"
 //
 // class declaration
@@ -67,9 +70,12 @@ class G_Jet : public edm::one::EDAnalyzer<edm::one::SharedResources>  {
   edm::EDGetTokenT<reco::VertexCollection> vtxLabel_;
   edm::EDGetTokenT<double>                         rhoLabel_;
   edm::EDGetTokenT<double> rhoCentralLabel_;
-  edm::EDGetTokenT<edm::TriggerResults> trgResultsLabel_;
+  //  edm::EDGetTokenT<edm::TriggerResults> trgResultsLabel_;
   string trgResultsProcess_;
   std::unique_ptr<HLTPrescaleProvider> hltPrescaleProvider_;
+  edm::EDGetTokenT<edm::TriggerResults> triggerBits_;
+  edm::EDGetTokenT<edm::View<pat::TriggerObjectStandAlone>> triggerObjects_;
+  edm::EDGetTokenT<pat::PackedTriggerPrescales> triggerPrescales_;
   TTree *tree_;
   void branchesJets (TTree*);
   void branchesMET (TTree*);

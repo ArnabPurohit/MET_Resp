@@ -132,7 +132,15 @@ void G_Jet::fillGlobalEvent(const edm::Event& e, const edm::EventSetup& es) {
   prescale_HLT_Photon165_HE10_v_ = 1;
   std::cout<<"Trigger bools initialized"<<std::endl;
 
+  edm::Handle<edm::TriggerResults> trgResultsHandle;
+  edm::Handle<edm::View<pat::TriggerObjectStandAlone>> triggerObjects;
+  edm::Handle<pat::PackedTriggerPrescales> triggerPrescales;
 
+  e.getByToken(triggerBits_, trgResultsHandle);
+  e.getByToken(triggerObjects_, triggerObjects);
+  e.getByToken(triggerPrescales_, triggerPrescales);
+  const edm::TriggerNames &trgNames = e.triggerNames(*trgResultsHandle);
+  /*
   //bool cfg_changed = true;
   HLTConfigProvider const& hltCfg = hltPrescaleProvider_->hltConfigProvider();
   std::cout<<"Trigger ConfigProvider stored"<<std::endl;
@@ -148,6 +156,7 @@ void G_Jet::fillGlobalEvent(const edm::Event& e, const edm::EventSetup& es) {
   ////////////////////////////////////////////////////////////////////////
   ////////////////////////////////////////////////////////////////////
   const edm::TriggerNames &trgNames = e.triggerNames(*trgResultsHandle);
+  */
   for (size_t i = 0; i < trgNames.size(); ++i) {
     const string &name = trgNames.triggerName(i);
     std::cout<<"Trigger module loop"<<std::endl;
@@ -155,28 +164,28 @@ void G_Jet::fillGlobalEvent(const edm::Event& e, const edm::EventSetup& es) {
       HLT_Photon30_R9Id90_HE10_IsoM_v_= true;
       //      prescale_HLT_Photon30_R9Id90_HE10_IsoM_v_= hltCfg.prescaleValue(e, es, name);
     std::cout<<"Trigger module 1st loop"<<std::endl;
-      prescale_HLT_Photon30_R9Id90_HE10_IsoM_v_( hltPrescaleProvider_->prescaleValue(e, es, name));
+    prescale_HLT_Photon30_R9Id90_HE10_IsoM_v_=triggerPrescales->getPrescaleForIndex(i);
     std::cout<<"Trigger module 1st loop end "<<std::endl;   
     }
     else if (name.find("HLT_Photon50_R9Id90_HE10_IsoM_v")!= string::npos  && trgResultsHandle->accept(i)){
       HLT_Photon50_R9Id90_HE10_IsoM_v_= true;
-      prescale_HLT_Photon50_R9Id90_HE10_IsoM_v_= hltPrescaleProvider_->prescaleValue(e, es, name);
+      prescale_HLT_Photon50_R9Id90_HE10_IsoM_v_= triggerPrescales->getPrescaleForIndex(i);
     }
     else if (name.find("HLT_Photon75_R9Id90_HE10_IsoM_v")!= string::npos && trgResultsHandle->accept(i)){
       HLT_Photon75_R9Id90_HE10_IsoM_v_= true;
-      prescale_HLT_Photon75_R9Id90_HE10_IsoM_v_=  hltPrescaleProvider_->prescaleValue(e, es, name);
+      prescale_HLT_Photon75_R9Id90_HE10_IsoM_v_=  triggerPrescales->getPrescaleForIndex(i);
     }
     else if (name.find("HLT_Photon90_R9Id90_HE10_IsoM_v")!= string::npos && trgResultsHandle->accept(i)){
       HLT_Photon90_R9Id90_HE10_IsoM_v_= true;
-      prescale_HLT_Photon90_R9Id90_HE10_IsoM_v_=  hltPrescaleProvider_->prescaleValue(e, es, name);
+      prescale_HLT_Photon90_R9Id90_HE10_IsoM_v_=  triggerPrescales->getPrescaleForIndex(i);
     }
     else if (name.find("HLT_Photon120_R9Id90_HE10_IsoM_v")!= string::npos && trgResultsHandle->accept(i)){
       HLT_Photon120_R9Id90_HE10_IsoM_v_= true;
-      prescale_HLT_Photon120_R9Id90_HE10_IsoM_v_= hltPrescaleProvider_->prescaleValue(e, es, name);
+      prescale_HLT_Photon120_R9Id90_HE10_IsoM_v_= triggerPrescales->getPrescaleForIndex(i);
     }
     else if (name.find("HLT_Photon165_HE10_v")!= string::npos && trgResultsHandle->accept(i)){
       HLT_Photon165_HE10_v_= true;
-      prescale_HLT_Photon165_HE10_v_= hltPrescaleProvider_->prescaleValue(e, es, name);
+      prescale_HLT_Photon165_HE10_v_= triggerPrescales->getPrescaleForIndex(i);
     }
 
   }

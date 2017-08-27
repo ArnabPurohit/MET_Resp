@@ -23,13 +23,14 @@ process.gjet = cms.EDAnalyzer('G_Jet',
                               VtxLabel             = cms.InputTag("offlineSlimmedPrimaryVertices"),
                               rhoLabel             = cms.InputTag("fixedGridRhoFastjetAll"),
                               rhoCentralLabel = cms.InputTag("fixedGridRhoFastjetCentralNeutral"),
-                              triggerResults       = cms.InputTag("TriggerResults", "", "HLT"),
-
-
+                              #triggerResults       = cms.InputTag("TriggerResults", "", "HLT"),
+                              triggerResults = cms.InputTag("TriggerResults","","HLT"),
+                              prescales = cms.InputTag("patTrigger","","PAT"),
+                              objects = cms.InputTag("selectedPatTrigger"),
 
                               )
 process.TFileService = cms.Service("TFileService",
-  fileName = cms.string('G_Jet_test_LeonorasTree_JetsrcselectedPatJets.root')
+  fileName = cms.string('G_Jet_test_LeonorasTree_SwagataDi_Suggestions.root')
 )
 
 
