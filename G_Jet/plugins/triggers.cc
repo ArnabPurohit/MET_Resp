@@ -67,7 +67,7 @@ void G_Jet::branchesGlobalEvent(TTree* tree) {
   tree->Branch("prescale_HLT_Photon120_R9Id90_HE10_IsoM_v", &prescale_HLT_Photon120_R9Id90_HE10_IsoM_v_ );
   tree->Branch("prescale_HLT_Photon165_HE10_v", &prescale_HLT_Photon165_HE10_v_);
   //  tree->Branch("phoPrescale", &phoPrescale_);
-std::cout<<"Trigger Branches are made"<<std::endl;
+//std::cout<<"Trigger Branches are made"<<std::endl;
 }
 
 void G_Jet::fillGlobalEvent(const edm::Event& e, const edm::EventSetup& es) {
@@ -130,7 +130,7 @@ void G_Jet::fillGlobalEvent(const edm::Event& e, const edm::EventSetup& es) {
   prescale_HLT_Photon90_R9Id90_HE10_IsoM_v_ = 1;
   prescale_HLT_Photon120_R9Id90_HE10_IsoM_v_ = 1;
   prescale_HLT_Photon165_HE10_v_ = 1;
-  std::cout<<"Trigger bools initialized"<<std::endl;
+  //std::cout<<"Trigger bools initialized"<<std::endl;
 
   edm::Handle<edm::TriggerResults> trgResultsHandle;
   edm::Handle<edm::View<pat::TriggerObjectStandAlone>> triggerObjects;
@@ -143,29 +143,29 @@ void G_Jet::fillGlobalEvent(const edm::Event& e, const edm::EventSetup& es) {
   /*
   //bool cfg_changed = true;
   HLTConfigProvider const& hltCfg = hltPrescaleProvider_->hltConfigProvider();
-  std::cout<<"Trigger ConfigProvider stored"<<std::endl;
+  //std::cout<<"Trigger ConfigProvider stored"<<std::endl;
   //hltPrescaleProvider_->init(e.getRun(), es, trgResultsProcess_, cfg_changed);
   //int pset = hltCfg.prescaleSet(e,es);
-  std::cout<<"Trigger ConfigProvider changed"<<std::endl;
+  //std::cout<<"Trigger ConfigProvider changed"<<std::endl;
 
 
   edm::Handle<edm::TriggerResults> trgResultsHandle;
   e.getByToken(trgResultsLabel_, trgResultsHandle);
   //  HLTConfigProvider hltCfg;
-  std::cout<<"Trigger handle grabbed"<<std::endl;
+  //std::cout<<"Trigger handle grabbed"<<std::endl;
   ////////////////////////////////////////////////////////////////////////
   ////////////////////////////////////////////////////////////////////
   const edm::TriggerNames &trgNames = e.triggerNames(*trgResultsHandle);
   */
   for (size_t i = 0; i < trgNames.size(); ++i) {
     const string &name = trgNames.triggerName(i);
-    std::cout<<"Trigger module loop"<<std::endl;
+    //std::cout<<"Trigger module loop"<<std::endl;
     if (name.find("HLT_Photon30_R9Id90_HE10_IsoM_v")!= string::npos && trgResultsHandle->accept(i)){
       HLT_Photon30_R9Id90_HE10_IsoM_v_= true;
       //      prescale_HLT_Photon30_R9Id90_HE10_IsoM_v_= hltCfg.prescaleValue(e, es, name);
-    std::cout<<"Trigger module 1st loop"<<std::endl;
+    //std::cout<<"Trigger module 1st loop"<<std::endl;
     prescale_HLT_Photon30_R9Id90_HE10_IsoM_v_=triggerPrescales->getPrescaleForIndex(i);
-    std::cout<<"Trigger module 1st loop end "<<std::endl;   
+    //std::cout<<"Trigger module 1st loop end "<<std::endl;   
     }
     else if (name.find("HLT_Photon50_R9Id90_HE10_IsoM_v")!= string::npos  && trgResultsHandle->accept(i)){
       HLT_Photon50_R9Id90_HE10_IsoM_v_= true;

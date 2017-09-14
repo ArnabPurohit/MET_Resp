@@ -30,6 +30,7 @@
 #include "DataFormats/PatCandidates/interface/TriggerObjectStandAlone.h"
 #include "DataFormats/PatCandidates/interface/PackedTriggerPrescales.h"
 #include "HLTrigger/HLTcore/interface/HLTPrescaleProvider.h"
+#include "DataFormats/Common/interface/ValueMap.h"
 //
 // class declaration
 //
@@ -42,7 +43,7 @@
 using namespace std;
 using namespace edm;
 
-
+void setbit(UShort_t& x, UShort_t bit);
 class G_Jet : public edm::one::EDAnalyzer<edm::one::SharedResources>  {
    public:
       explicit G_Jet(const edm::ParameterSet&);
@@ -70,6 +71,11 @@ class G_Jet : public edm::one::EDAnalyzer<edm::one::SharedResources>  {
   edm::EDGetTokenT<reco::VertexCollection> vtxLabel_;
   edm::EDGetTokenT<double>                         rhoLabel_;
   edm::EDGetTokenT<double> rhoCentralLabel_;
+
+  edm::EDGetTokenT<edm::ValueMap<bool> >  phoLooseIdMapToken_;
+  edm::EDGetTokenT<edm::ValueMap<bool> >  phoMediumIdMapToken_;
+  edm::EDGetTokenT<edm::ValueMap<bool> > phoTightIdMapToken_;
+
   //  edm::EDGetTokenT<edm::TriggerResults> trgResultsLabel_;
   string trgResultsProcess_;
   std::unique_ptr<HLTPrescaleProvider> hltPrescaleProvider_;
