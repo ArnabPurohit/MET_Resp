@@ -30,6 +30,11 @@ using namespace edm;
 //
 // constructors and destructor
 //
+void setbit(UShort_t& x, UShort_t bit) {
+  UShort_t a = 1;
+  x |= (a << bit);
+}
+
 G_Jet::G_Jet(const edm::ParameterSet& iConfig):
   histContainer_(),
   /* vtxToken_(consumes<reco::VertexCollection>(iConfig.getParameter<edm::InputTag>("vertices"))),     //Working
@@ -49,6 +54,11 @@ G_Jet::G_Jet(const edm::ParameterSet& iConfig):
   triggerBits_= consumes<edm::TriggerResults>(iConfig.getParameter<InputTag>("triggerResults"));
   triggerObjects_ = consumes<edm::View<pat::TriggerObjectStandAlone>>(iConfig.getParameter<InputTag>("objects"));
   triggerPrescales_ = consumes<pat::PackedTriggerPrescales>(iConfig.getParameter<InputTag>("prescales"));
+
+  phoLooseIdMapToken_ = consumes<edm::ValueMap<bool> >(iConfig.getParameter<edm::InputTag>("phoLooseIdMap"));
+  phoMediumIdMapToken_ = consumes<edm::ValueMap<bool> >(iConfig.getParameter<edm::InputTag>("phoMediumIdMap"));
+  phoTightIdMapToken_ = consumes<edm::ValueMap<bool> >(iConfig.getParameter<edm::InputTag>("phoTightIdMap"));
+
 
 
   usesResource("TFileService");
